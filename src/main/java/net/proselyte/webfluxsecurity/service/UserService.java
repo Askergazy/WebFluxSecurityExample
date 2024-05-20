@@ -15,28 +15,31 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public Mono<UserEntity> registerUser(UserEntity user) {
+    private final UserRepository userRepository;
+    private  final PasswordEncoder passwordEncoder;
+
+    public Mono<UserEntity> registerUser(UserEntity user){
         return userRepository.save(
-                user.toBuilder()
-                .password(passwordEncoder.encode(user.getPassword()))
-                .role(UserRole.USER)
-                .enabled(true)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build()
+                        user.toBuilder()
+                        .password(passwordEncoder.encode(user.getPassword()))
+                        .role(UserRole.USER)
+                        .enabled(true)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .build()
         ).doOnSuccess(u -> {
-            log.info("IN registerUser - user: {} created", u);
+            log.info("IN registerUser - user: {} created",u);
         });
+
     }
 
-    public Mono<UserEntity> getUserById(Long id) {
+
+    public Mono<UserEntity> getUserById(Long id){
         return userRepository.findById(id);
     }
 
-    public Mono<UserEntity> getUserByUsername(String username) {
+    public Mono<UserEntity> getByUsername(String username){
         return userRepository.findByUsername(username);
     }
 }

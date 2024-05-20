@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table("users")
 public class UserEntity {
+
     @Id
     private Long id;
     private String username;
@@ -23,8 +24,10 @@ public class UserEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+
     @ToString.Include(name = "password")
-    private String maskPassword() {
-        return "********";
+    private String maskPassword(){
+        return  "********";
     }
+
 }
